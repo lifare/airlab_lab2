@@ -3,16 +3,19 @@
 #include "button.h"
 
 #define PIN_BUTTON 5
-#define WAIT 3
+#define WAIT_TIME_S 3
 
 Button button_make(PIN_BUTTON);
+const int address = 10;
 
 void setup() {
-  Serial.begin(115200);
   Wire.begin();
 }
 
 void loop() {
-    if (button_make.wasPressed())
-        Wire.write(WAIT);
+    if (button_make.wasPressed()){
+      Wire.beginTransmission(address);
+      Wire.write(WAIT_TIME_S);
+      Wire.endTransmission();
+    }
 }
